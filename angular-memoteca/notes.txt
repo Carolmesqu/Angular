@@ -1,0 +1,359 @@
+Cláudia está aplicando seus conhecimentos em Angular
+desenvolvendo um componente de perfil de usuário,
+onde deseja apresentar o nome e a foto de perfil
+do usuário. Com o uso do property binding, Cláudia
+testou algumas formas diferentes de mostrar esses
+dados, mas uma não está correta.
+
+@Component({
+  selector: 'app-perfil',
+  templateUrl: './perfil.component.html',
+  styles: []
+})
+export class PerfilComponent {
+  usuario = {
+    nome: 'Cláudia Ohio',
+    imgPerfil: './assets/foto-1445.jpg'
+  }
+}
+
+<div class="card-perfil">
+    <p>{{usuario.nome}}</p>
+    <img src="{{usuario.imgPerfil}}" alt="Imagem de perfil">
+</div>
+
+A interpolação é a incorporação de expressões em
+texto com o uso de chaves duplas como delimitadores.
+
+<div class="card-perfil">
+    <p [textContent]="usuario.nome"></p>
+    <img [src]="usuario.imgPerfil" alt="Imagem de perfil">
+</div>
+
+A vinculação de propriedades ajuda a definir o valor de uma
+propriedade criada dentro do componente para uma propriedade
+de um elemento HTML. para isso basta colocar a propriedade
+entre colchetes e passar como valor a propriedade do
+componente.
+
+-------------------------------//-------------------------------
+
+Nesta aula vimos como podemos fazer a comunicação de dados
+entre template e componente com auxílio do data binding,
+os diferentes tipos e quais os recursos necessários para
+usá-los.
+
+Das afirmações abaixo, assinale as que são verdadeiras.
+
+Ao usar {{ pensamento.conteudo }}, o Angular insere o valor
+do atributo do componente no template.
+
+
+A interpolação permite a visualização do valor de uma
+propriedade do componente no template com o uso de chaves
+duplas. {{ nome-da-propriedade }}.
+
+Para enviar informação do typescript para o template,
+utilizamos colchetes na propriedade da tag html, como
+no exemplo: [src]=”imagem”.
+
+
+O property binding funciona no mesmo sentido da
+interpolação, unidirecional, vindo a informação do
+componente para o template. É representado pelo uso
+de colchetes em atributos de elementos HTML.
+
+Two-way data binding mantém a informação atualizada nas
+duas pontas da comunicação.
+
+
+Este binding combina o recurso do property binding e o
+event binding em uma única notação usando a diretiva
+ngModel.[(ngModel)]=”nome-da-propriedade”.
+
+-------------------------------//-------------------------------
+
+Criar componente de formulário para adicionar novos
+pensamentos;
+
+Passar valores de uma propriedade do component para atributos
+de tag dentro do template com o uso de property binding;
+Mostrar valores de propriedades do component no template por
+meio da interpolação;
+
+Escutar eventos do template e fazer a chamada de métodos no
+component com o event binding;
+
+Usar a diretiva ngModel que pertence ao FormsModule para a
+comunicação bidirecional entre component e template;
+
+Como funcionam os diferentes tipos de comunicação entre
+component e template.
+
+-------------------------------//-------------------------------
+
+No projeto construímos as rotas para os componentes de
+formulário e lista de pensamento, estas rotas quando
+solicitadas devem ser renderizadas no corpo da diretiva
+<router-outlet>.
+
+Agariberto está construindo a aplicação conosco, mas ao
+finalizar a construção do botão e testá-lo percebeu que a
+página inteira está sendo recarregada, aspecto que devemos
+evitar em uma Single Page Application. Veja as configurações
+de roteamento de Agariberto.
+
+const routes: Routes = [
+  { path: "", redirectTo: "listarPensamento", pathMatch: "full" },
+  { path: "criarPensamento", component: CriarPensamentoComponent },
+  { path: "listarPensamento", component: ListarPensamentoComponent },
+];
+
+E o botão que criou:
+
+<button class="botao" href="/criarPensamento">
+        Adicionar pensamento
+</button>
+
+O que fazer para que carregue apenas o componente quando
+clicar no botão?
+
+O atributo href deve ser trocado pelo routerLink tendo como
+valor o nome do componente igual ao declarado no objeto
+de rota.
+
+
+O routerLink inicia a navegação do componente, que será
+renderizado na diretiva <router-outlet>.
+
+-------------------------------//-------------------------------
+
+O RouterModule é um módulo do Angular que permite definir
+rotas na sua aplicação, diferentes estratégias de
+correspondência de caminho, fácil acesso aos parâmetros
+de rota e proteções de rota para proteger os componentes
+contra acesso não autorizado.
+
+Na aula vimos a diretiva <router-outlet> que é responsável
+por renderizar a rota solicitada pelo usuário e por meio da
+propriedade routerLink podemos passar para um botão ou ancora
+o componente que será renderizado a partir dele.
+
+No projeto da aula não teremos, mas imagine que você esteja
+construindo uma página que possui um menu com links que
+redireciona para alguns componentes desta página, como no
+exemplo:
+
+Perceba que a página /home é apresentada, mas na barra de
+menu nada indica que está nessa página. Se você conhece
+um pouco de Javascript talvez pode ter pensado em um evento
+de click e adicionar uma classe, mas isso daria muito
+trabalho. O RouterModule possui a propriedade
+routerLinkActive que é necessário apenas passar a classe
+com o estilo que será aplicado no link.
+
+app.component.html
+
+<nav class="navbar container full-width d-flex">
+    <ul class="d-flex  links">
+        <li
+            routerLink="/first"
+            routerLinkActive="active"
+            class="links-nav py-1"><a>First</a>
+        </li>
+        <li
+            routerLink="/second"
+            routerLinkActive="active"
+            class="links-nav py-1"><a>Second</a>
+        </li>
+    </ul>
+    <img
+        class="logo"
+        routerLink="/home"
+        routerLinkActive="active"
+        src="./assets/LogoAlurabranco.png" alt="">
+</nav>
+
+<main class="container m-width py-3">
+    <router-outlet></router-outlet>
+</main>
+
+app.component.css
+
+.active{
+    border-bottom: 5px solid white;
+    color: white;
+    transition: 300ms ease-in;
+}
+.logo.active {
+    padding-bottom: 13px;
+}
+
+-------------------------------//-------------------------------
+
+Utilizar o RouterModule;
+
+Utilizar a diretiva <router-outlet>;
+
+Criar e configurar rotas;
+
+Navegar por meio da propriedade routerLink.
+
+-------------------------------//-------------------------------
+
+As diretivas são como atributos em um elemento DOM que
+informa o Angular para que adicione algum comportamento a
+este elemento. Sobre as diretivas que conheceu nesta aula,
+marque as afirmativas corretas.
+
+Para utilizar o ngClass com expressão basta informar a classe
+seguida da expressão que retorne valor booleano.
+
+É isso aí. Caso a expressão retorne true a classe declarada
+é aplicada, como no exemplo. A propriedade active vai ser
+alterada para o valor contrário ao atual, se for true muda
+para false e vice versa:
+
+@Component({
+  selector: 'app-home',
+  template: `
+    <div>
+      <h1 [ngClass]="{'color-blue': active}">
+        Home!
+      </h1>
+      <button (click)="colorBlue()">
+          Mudar cor
+      </button>
+    </div>
+  `,
+  styles: [
+  ]
+})
+export class HomeComponent {
+  active: boolean = true;
+
+  constructor() { }
+
+  colorBlue(){
+    this.active = !this.active
+  }
+}
+
+A diretiva “*ngIf” é responsável por incluir ou
+excluir um elemento do template.
+
+Isso aí. O elemento que recebeu a diretiva, caso a
+condicional for verdadeira, irá incluir o elemento
+no template, caso contrário, ele poderá excluir o
+elemento ou incluir um elemento declarado usando
+o elemento do Angular <ng-template>.
+
+O “*ngFor” permite percorrer um array e exibir
+cada item como elemento no template.
+
+A sintaxe é composta por uma variável local
+que recebe o valor de cada item percorrido
+seguido de qual será o array ou objeto
+iterável.
+
+<div *ngFor="let pensamento of listaPensamento">
+
+-------------------------------//-------------------------------
+
+Diretivas de componentes: usado com um modelo.
+Esse tipo de diretiva é a mais comum.
+Ex: <app-listarPensamentos>.
+
+Diretivas estruturais: altera o layout do DOM adicionando
+e removendo elementos DOM.
+Ex: NgIf, NgFor. NgSwitch.
+
+Diretivas de atributos: altera a aparência ou o comportamento
+de um elemento, componente ou outra diretiva.
+Ex: NgClass, NgStyle.
+
+-------------------------------//-------------------------------
+
+Tipos diferentes de diretivas;
+Utilizar diretivas estruturais incluindo e excluindo elementos
+com ngFor e ngIf;
+Utilizar expressões para estilizar elementos com ngClass.
+
+-------------------------------//-------------------------------
+
+O uso de Services em Angular traz mais organização para a
+aplicação e permite um melhor gerenciamento das informações.
+Com base no que vimos sobre Services e Injeção de dependência,
+marque as afirmações corretas.
+
+O decorador @Injectable informa ao Angular que essa classe é
+injetável e com o metadado providedIn como root torna esse
+serviço visível em toda aplicação.
+
+O metadado providedIn: 'root', indica que o Angular deve
+fornecer o serviço no injetor raiz.
+
+O Objetivo de um serviço é organizar e compartilhar regras de
+negócios, dados e métodos para diferentes componentes de uma
+aplicação por meio da injeção de dependência.
+
+Serviço em Angular são classes com o decorador @Injectable
+que informa ao Angular que pode ser injetado em componentes
+da aplicação.
+
+-------------------------------//-------------------------------
+
+Utilizar o JSON-Server simulando uma API REST;
+Criar uma interface para definir tipos personalizados;
+Entender a importância do Service e o novo decorator
+@Injectable();
+Injetar dependências.
+
+-------------------------------//-------------------------------
+
+Ao fazer requisições o HttpClient retorna observable da chamada
+desses métodos. O Observable é utilizado internamente pelo
+framework e já é instalado quando você cria uma nova aplicação
+Angular e é uma funcionalidade da biblioteca RXJS. Sobre o
+Observable marque as afirmativas corretas.
+
+Um Observable pode ser acessado em várias partes da aplicação,
+basta se inscrever.
+
+O .subscribe nos permite 3 tipos de interações com esse
+Observable, caso tenha sucesso, emitir erro e ao completar.
+
+É capaz de lidar com transferências de dados assíncrona.
+
+O Observable atua como observador de um item e sempre que
+houver mudança ele emite uma notificação, com isso executamos
+alguma ação.
+
+-------------------------------//-------------------------------
+
+Nesta aula finalizamos nossa aplicação com um CRUD com auxílio
+da classe HttpClient. Mostre o que aprendeu marcando as
+afirmações corretas.
+
+O método GET deve receber como parâmetro a URL da API.
+
+
+O GET precisa receber a URL como parâmetro para trazer os
+dados para a aplicação.
+
+Alternativa correta
+O HttpClient retorna Observable das chamadas de métodos HTTP,
+o que facilita na implementação de regras em caso de sucesso,
+erro e conclusão da requisição.
+
+
+HttpClient é uma classe que possui envia requisições HTTP e
+permite interagir com os suas diferentes possibilidades de
+resultados.
+
+-------------------------------//-------------------------------
+
+Utilizar métodos de requisição HTTP com serviço HttpClient;
+Utilizar o Observable no retorno dos métodos HTTP;
+Capturar parâmetros em rotas;
+Criar um CRUD.
