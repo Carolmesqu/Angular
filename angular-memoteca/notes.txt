@@ -357,3 +357,91 @@ Utilizar métodos de requisição HTTP com serviço HttpClient;
 Utilizar o Observable no retorno dos métodos HTTP;
 Capturar parâmetros em rotas;
 Criar um CRUD.
+
+-------------------------------//-------------------------------
+
+No angular, existe mais de uma forma de criar formulários
+reativos. Você pode criar um novo formulário, atribuindo
+a ele uma nova instância da classe FormGroup e, para cada
+input, uma instância da classe FormControl. Assim:
+
+ngOnInit(): void {
+    this.formulario = new FormGroup({
+      conteudo: new FormControl(''),
+      autoria: new FormControl(''),
+      modelo: new FormControl('')
+    })
+  }
+
+No lugar de instanciar um FormGroup e um FormControl
+para cada campo do formulário, você pode utilizar o
+construtor de formulários do angular, o FormBuilder
+e utilizar uma sintaxe simplificada, como visto na
+aula. Por “debaixo dos panos”, o FormBuilder vai
+atribuir os controles aos campos, sem precisarmos
+nos preocupar com isso.
+
+ngOnInit(): void {
+    this.formulario = this.formBuilder.group({
+      conteudo: [''],
+      autoria: [''],
+      modelo: ['']
+    })
+  }
+
+É importante ressaltar que as duas formas estão corretas
+e podem ser utilizadas de acordo com a preferência da
+pessoa desenvolvedora. E aí, qual você prefere?
+
+-------------------------------//-------------------------------
+
+Para acessar todo o poder dos formulários reativos em Angular,
+é necessário além da criação do formulário no componente,
+fazer a ligação entre ele e o form que está no template.
+Para isso, é necessário seguir alguns passos importantes.
+Assinale a alternativa que mostra os passos necessários
+para fazer a associação do formulário e dos campos
+entre component e template.
+
+Na tag <form> do html, é necessário fazer um property binding
+por meio da diretiva formGroup e atribuir a ela o valor da
+propriedade formulario, criada na classe typescript. Além disso,
+é necessário incluir em cada input a propriedade
+formControlName, com o nome declarado na classe.
+
+<form [formGroup]="formulario">
+
+formControlName="conteudo"
+
+formControlName="autoria"
+
+formControlName="modelo"
+
+O FormGroup representa um grupo de dados no formulário.
+Você pode ter vários grupos em um único formulário, o que
+facilita e organiza o controle dos dados.
+
+O FormControlName é uma diretiva que sincroniza os
+controles em um formGroup através da sincronização por
+meio do nome da propriedade do formGroup, como fiz com
+o conteúdo, autoria e modelo.
+
+-------------------------------//-------------------------------
+
+Podemos utilizar a interpolação para acessar no html os
+valores das propriedades declaradas na classe typescript.
+Agora, esses valores estão dentro do formulário e não mais
+no objeto ‘pensamento’, como anteriormente. Qual método você
+usaria para renderizar o conteúdo do pensamento?
+
+<p>{{ formulario.get('conteudo')?.value }}</p>
+
+Em um formulário reativo, você sempre pode acessar qualquer
+controle de formulário através do método get, passando para
+ele o campo e a propriedade que deseja acessar. Como
+queremos o valor do campo, devemos passar a propriedade
+value.
+
+-------------------------------//-------------------------------
+
+
