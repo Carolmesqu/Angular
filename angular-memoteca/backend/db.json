@@ -11,6 +11,12 @@
       "conteudo": "Estudando Angular CLI",
       "autoria": "Dev Alura",
       "modelo": "modelo2"
+    },
+    {
+      "conteudo": "Olá Mundo!",
+      "autoria": "Código ",
+      "modelo": "modelo3",
+      "id": 3
     }
   ]
 }
