@@ -11,6 +11,9 @@
     </div>
   </div>
 </section>
+<app-botao-carregar-mais
+[haMaisPensamentos]="haMaisPensamentos"
+(click)="carregarMaisPensamentos()"></app-botao-carregar-mais>
 <!-- O ng-templante não é renderizado, precisamos instruir o conteúdo para que ele apareça,
      o nome desse ng-templante é semPensamentos -->
 <ng-template #semPensamentos>
