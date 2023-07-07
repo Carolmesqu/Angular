@@ -444,4 +444,210 @@ value.
 
 -------------------------------//-------------------------------
 
+Criar um formulário reativo através da classe FormBuilder;
+Associar o formulário criado no component ao template através
+da diretiva formGroup;
+Utilizar a diretiva formControlName para associar os inputs do
+formulário;
+Acessar os valores dos campos do formulário no template com o
+método get.
 
+-------------------------------//-------------------------------
+
+Os “validators” ou validadores, são mais uma facilidade que
+o Angular traz no pacote @angular/forms. Essa classe já traz
+inúmeros tipos de validações prontas para serem utilizadas.
+É incrível como isso facilita o desenvolvimento. Um validador
+é uma função que processa uma coleção de controles e retorna
+um erro ou nulo (o retorno nulo significa que a validação foi
+aprovada).
+
+Você conheceu na aula, o Validators.required(),
+Validators.minLenght(), Validators.pattern() e o
+Validators.compose(), mas existem diversos outros tipos de
+validação presentes na classe Validators. Conheça:
+
+Validators.min()
+
+Validador que exige que o valor do controle seja maior
+ou igual ao número fornecido.
+Validators.max()
+
+Validador que exige que o valor do controle seja menor
+ou igual ao número fornecido.
+Validators.requiredTrue()
+
+Validador que exige que o valor do controle seja verdadeiro.
+Este validador é comumente usado para caixas de seleção
+obrigatórias.
+Validators.email()
+
+Validador que exige que o valor do controle passe em um
+teste de validação de email.
+Validators.maxLength()
+
+Validador que exige que o comprimento do valor do controle
+seja menor ou igual ao tamanho máximo fornecido.
+Validators.nullValidator()
+
+Validador de valores nulos.
+Validators.composeAsync()
+
+Compõe vários validadores assíncronos em uma única função
+que retorna a união dos objetos de erro individuais para
+o controle fornecido.
+Na documentação do Angular, você pode encontrar mais
+detalhes sobre a classe Validators.
+
+https://angular.io/api/forms/Validators#description
+
+-------------------------------//-------------------------------
+
+Trabalhando como pessoa desenvolvedora, foi apresentada a
+você a seguinte situação: a tela de cadastro de uma aplicação
+Angular contém um formulário reativo onde foram implementadas
+validações e também mensagens de erro informativas. Porém,
+essas mensagens estão aparecendo logo no carregamento inicial,
+no primeiro contato da pessoa usuária com o sistema, o que
+pode causar certa estranheza.
+
+Foi solicitado a você que essas mensagens de erro apareçam
+apenas quando necessário. Considerando apenas o campo “nome”,
+selecione a alternativa que mostra como deve ficar o código
+para que a mensagem de erro seja exibida apenas após o campo
+ter sido acessado.
+
+Código atual do html:
+
+<div class="mensagem__erro"
+     *ngIf="formulario.get('nome')?.errors”>
+      Nome obrigatório
+</div>
+
+<div class="mensagem__erro"
+     *ngIf="formulario.get('nome')?.errors && formulario.get('nome')?.touched">
+      Nome obrigatório
+</div>
+
+A propriedade touched informa se o controle foi tocado, o
+que significa que o usuário disparou um evento blur nele
+(evento que é acionado quando um elemento perde foco).
+Nesse caso, o erro não aparece logo de início, apenas se a
+pessoa acessar o campo e sair dele sem preenchê-lo.
+
+-------------------------------//-------------------------------
+
+Implementar validações nos campos do formulário através da
+classe Validators;
+Identificar os tipos de erros que ocorreram nas validações;
+Exibir mensagens de erro customizadas;
+Mostrar mensagens de erro apenas quando o campo for
+acessado;
+Habilitar/desabilitar o botão de salvar de acordo com o
+status do formulário.
+
+-------------------------------//-------------------------------
+
+A classe HttpParams representa um corpo de requisição/resposta
+HTTP com parâmetros serializados.
+
+Esta classe é imutável, ou seja, todas as operações de mutação
+retornam uma nova instância. O método ‘set’ que utilizamos,
+serve para substituir o valor de um parâmetro. É enviado o
+nome do parâmetro e o seu valor e é retornado um novo corpo
+com um novo valor.
+
+Conheça os outros métodos do HttpParams:
+
+    HttpParams.has()
+        Informa se o corpo inclui um ou mais valores para
+        um determinado parâmetro.
+
+    HttpParams.get()
+        Recupera o primeiro valor de um parâmetro.
+
+    HttpParams.getAll()
+        Recupera todos os valores de um parâmetro.
+
+    HttpParams.keys()
+        Recupera todos os parâmetros para este corpo da
+        requisição.
+
+    HttpParams.append()
+        Acrescenta um novo valor aos valores existentes
+        para um parâmetro.
+
+    HttpParams.appendAll()
+        Constrói um novo corpo com valores anexados para o
+        nome do parâmetro fornecido.
+
+    HttpParams.delete()
+        Remove um determinado valor ou todos os valores
+        de um parâmetro.
+
+    HttpParams.toString()
+        Serializa o corpo da requisição em uma string
+        codificada, em que os pares de chave-valor
+        (separados por =) são separados por & s.
+
+https://angular.io/api/common/http/HttpParams
+
+-------------------------------//-------------------------------
+
+Podemos passar parâmetros na requisição concatenando os
+valores na url. Porém, essa não é uma boa prática. O Angular
+fornece uma forma melhor, mais segura e elegante para fazer
+isso através da classe HttpParams. Antes de conhecer essa
+classe, você criou o seguinte método no service para listar
+os pensamentos:
+
+pensamento.service.ts
+
+
+//código omitido
+
+export class PensamentoService {
+  private readonly API = 'http://localhost:3000/pensamentos'
+  constructor(private http: HttpClient) { }
+
+  listar(pagina: number): Observable<Pensamento[]> {
+    const itensPorPagina: number = 6;
+    return this.http.get<Pensamento[]>(this.API +
+    `?_page=${pagina}&_limit=${itensPorPagina}`);
+ }
+
+//código restante
+
+Marque a alternativa que apresenta uma refatoração
+correta do código utilizando o HttpParams.
+
+//código omitido
+
+export class PensamentoService {
+  private readonly API = 'http://localhost:3000/pensamentos'
+  constructor(private http: HttpClient) { }
+
+  listar(pagina: number): Observable<Pensamento[]> {
+    const itensPorPagina: number = 6;
+    let params = new HttpParams()
+      .set("_page", pagina)
+      .set("_limit", itensPorPagina)
+   return this.http.get<Pensamento[]>(this.API, {params});
+  }
+
+//código restante
+
+É possível refatorar criando uma nova instância da classe
+HttpParams e utilizando o método set, para substituir o
+valor dos parâmetros ‘pagina’ e ‘itensPorPagina’, enviando
+o nome do parâmetro e o seu valor. Na requisição, é passado
+um objeto com todos os parâmetros.
+
+-------------------------------//-------------------------------
+
+Utilizar o HttpParams para enviar parâmetros na url;
+Implementar paginação dos dados;
+Criar um componente botão para carregar os pensamentos sob demanda;
+Realizar a comunicação entre componentes.
+
+-------------------------------//-------------------------------
